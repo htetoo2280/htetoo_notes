@@ -2,7 +2,7 @@
 id: acjnq5fxl1e8j1cv6cresp8
 title: Git_learning
 desc: ''
-updated: 1747298749159
+updated: 1747637564438
 created: 1747205099323
 ---
 
@@ -14,7 +14,7 @@ created: 1747205099323
 
 --------------------------------------
 
-- checking commit - git log --oneline
+- checking commit git - git log --oneline
 
 
 --------------------------------------
