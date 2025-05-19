@@ -2,7 +2,7 @@
 id: oac7csn6t6x80cs77zfja97
 title: kpay_mmqr_merchant
 desc: ''
-updated: 1747627865685
+updated: 1747638863658
 created: 1747626639997
 ---
 
@@ -17,6 +17,8 @@ created: 1747626639997
 - glue - raw_to_processed_kpay_mmqr_merchant
 - procedure - integration.to_base_kpay_mmqr_merchant()
 - catalog - dl_processed.mmqr_merchant
+- s3 - s3://acoe-datalake-processed/pay/mmqr_merchant/
+
 
 
 ```bash
