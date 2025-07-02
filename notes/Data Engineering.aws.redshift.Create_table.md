@@ -2,12 +2,11 @@
 id: eq8p1h0h3mkzh9w6qrvu42k
 title: Create_table
 desc: ''
-updated: 1747625933216
+updated: 1750737673219
 created: 1742360490652
 ---
 
 ### Creating table 
-
 
 
 

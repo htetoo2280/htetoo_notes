@@ -2,13 +2,15 @@
 id: 1iber5198svkfg6thdxwpwb
 title: Kpay_mmqr_order
 desc: ''
-updated: 1746609090835
+updated: 1750737816603
 created: 1746600559353
 ---
 - Email - New Table syn up ||kpay mmqr order
 
 
 --------------------------
+
+- type - full refresh
 
 - step - huawei-lbiextract-upto-datalake-processed
 - source - lbi_ods.t_o_app_mmqr_order 
