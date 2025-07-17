@@ -2,9 +2,10 @@
 id: oac7csn6t6x80cs77zfja97
 title: kpay_mmqr_merchant
 desc: ''
-updated: 1747638863658
+updated: 1752661466780
 created: 1747626639997
 ---
+
 
 - Email - New Table syn up || kpay_mmqr_order
 

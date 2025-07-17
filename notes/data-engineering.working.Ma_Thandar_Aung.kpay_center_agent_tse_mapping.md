@@ -2,16 +2,16 @@
 id: tydb1jsjf11dgvr7c89pelq
 title: kpay_center_agent_tse_mapping
 desc: ''
-updated: 1751881028150
+updated: 1752639872799
 created: 1751877540697
 ---
 
 Email - Re: KBZ Pay Center Financial Performance Dashboard (DAC-5869)
 
+path - /DEStaging/KBZPay/ABVC/KBZPay_Center
 
 ``` bash
 
-delete from lookup.kpay_center_agent_tse_mapping ;
 
 
 create table #kpay_center_agent_tse_mapping (
@@ -35,12 +35,14 @@ ri_name	 varchar(255)
 
 
 COPY #kpay_center_agent_tse_mapping
-FROM 's3://acoe-datalake-raw/Pay/kpay_center_mapping_csv_manual/Center_Mapping_Format_2025-07-04.csv'
+FROM 's3://acoe-datalake-raw/Pay/kpay_center_mapping_csv_manual/Center_Mapping_Format_2025-07-11.csv'
 IAM_ROLE 'arn:aws:iam::390295393321:role/acoe-redshift-unload'
 CSV
 DELIMITER ','
 IGNOREHEADER 1 ;
 
+
+delete from lookup.kpay_center_agent_tse_mapping ;
 
 -- insert into real table
 
@@ -62,5 +64,12 @@ case when agent_tse_operation_start_date = '-' then null else TO_DATE(agent_tse_
 case when agent_tse_operation_end_date = '-' then null else TO_DATE(agent_tse_operation_end_date, 'MM/DD/YYYY') end as agent_tse_operation_end_date,
 employee_id_ri,
 ri_name from #kpay_center_agent_tse_mapping
+
+
+ALTER TABLE lookup.kpay_center_agent_tse_mapping
+ADD COLUMN file_name  varchar(255);
+
+
+update lookup.kpay_center_agent_tse_mapping set file_name = 'Center_Mapping_Format_2025-07-11.csv'
 
 ```
