@@ -2,7 +2,7 @@
 id: 05jlnw6xylgyy7km61rxjyy
 title: ColumnName_changes
 desc: ''
-updated: 1752807841849
+updated: 1753262720252
 created: 1752807650005
 ---
 derive.cbs_daily_acc_trn
@@ -15,5 +15,8 @@ wealth_daily_cif_trn
 retail_user_daily_segments_bal
 retail_user_monthly_segments_bal
 detail_retail_user_segments
+
+
+[Download Excel File](assets/column_change_working.xlsx)
 
 

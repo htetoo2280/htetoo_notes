@@ -2,7 +2,7 @@
 id: tydb1jsjf11dgvr7c89pelq
 title: kpay_center_agent_tse_mapping
 desc: ''
-updated: 1752639872799
+updated: 1753262718170
 created: 1751877540697
 ---
 
@@ -35,7 +35,7 @@ ri_name	 varchar(255)
 
 
 COPY #kpay_center_agent_tse_mapping
-FROM 's3://acoe-datalake-raw/Pay/kpay_center_mapping_csv_manual/Center_Mapping_Format_2025-07-11.csv'
+FROM 's3://acoe-datalake-raw/Pay/kpay_center_mapping_csv_manual/Center_Mapping_Format_2025-07-18.csv'
 IAM_ROLE 'arn:aws:iam::390295393321:role/acoe-redshift-unload'
 CSV
 DELIMITER ','

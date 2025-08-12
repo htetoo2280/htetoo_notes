@@ -2,7 +2,7 @@
 id: hqnksnjezo9508r0oror3cp
 title: mit_view_cbmnet_bbt_outgoing
 desc: ''
-updated: 1751350889009
+updated: 1753157350791
 created: 1751350540863
 ---
 
@@ -15,6 +15,7 @@ s3 - s3://acoe-datalake-processed/kbzrptdcpdb/kbzreps/mit_view_cbmnet_bbt_outgoi
 dest - cbs.mit_view_cbmnet_bbt_outgoing 
 catalog - datalake-processed-kbz-analytics.
 procedure - integration.to_cbs_mit_view_cbmnet_bbt_outgoing()
+state - etl-cbs-rptdbsrv
 
 
 

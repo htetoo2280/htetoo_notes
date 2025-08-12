@@ -2,9 +2,10 @@
 id: ut55aaqj40t85uwn3rdozge
 title: aws_CICD_Testing
 desc: ''
-updated: 1743571184396
+updated: 1753258180731
 created: 1743570121943
 ---
+
 
 - We need vscode , git , s3 , aws_code_commit , code_build and code_pipeline
 
