@@ -2,7 +2,7 @@
 id: 23hp15636ktzupbdl871o6a
 title: S3_to_redshift
 desc: ''
-updated: 1752661473980
+updated: 1759381429701
 created: 1742360080484
 ---
 
@@ -24,6 +24,18 @@ COPY hol.dev_ictm_acc_06_mar_previous
 FROM 's3://acoe-datalake/dev/raw/previous_data/'
 IAM_ROLE 'arn:aws:iam::390295393321:role/acoe-redshift-unload'
 FORMAT AS PARQUET;
+
+
+-- this is update 
+
+COPY report.PBI_Report_Dictionary 
+FROM 's3://acoe-datalake-raw/temp/report_dict/report_dict.csv'
+IAM_ROLE 'arn:aws:iam::390295393321:role/acoe-redshift-unload'
+FORMAT AS CSV
+DELIMITER ',' 
+QUOTE '"'
+IGNOREHEADER 1;
+
 ```
 
 -----------------

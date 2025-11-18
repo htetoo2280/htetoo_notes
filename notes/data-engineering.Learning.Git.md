@@ -2,7 +2,7 @@
 id: acjnq5fxl1e8j1cv6cresp8
 title: Git_learning
 desc: ''
-updated: 1747637564438
+updated: 1761276469432
 created: 1747205099323
 ---
 
@@ -42,5 +42,20 @@ revert commit , reset commit
 ```bash
 - git checkout "branch_name" (to switch branch)
 - git commit -m "comment" 
+
+```
+
+## branch deleting
+
+- delete all branch skip master
+
+```bush
+
+git branch --merged master | ForEach-Object {
+    $branch = $_.Trim()
+    if ($branch -ne 'master' -and $branch -ne '* master') {
+        git branch -d $branch
+    }
+}
 
 ```

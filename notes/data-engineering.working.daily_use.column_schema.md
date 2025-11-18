@@ -2,19 +2,21 @@
 id: bh46ywvgupcdomew8a1me0i
 title: Column_schema
 desc: ''
-updated: 1754549153851
+updated: 1761191853897
 created: 1753167503346
 ---
 
 
+### oracle
 ```bash 
 
-SELECT column_name, data_type, data_length, nullable ,TABLE_NAME 
+SELECT column_name, data_type, data_length
 FROM all_tab_columns 
 WHERE owner = 'LBI_ODS' AND TABLE_NAME = 'T_O_APP_MMQR_MERCH_RECORD'
 
 ```
 
+### redshift
 ```bash 
 SELECT 
     column_name, 
