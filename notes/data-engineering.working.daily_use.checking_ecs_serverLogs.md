@@ -2,9 +2,16 @@
 id: dafw64eodkb00y9x49gucsk
 title: checking_ecs_serverLogs
 desc: ''
-updated: 1762588724000
+updated: 1769404351445
 created: 1758691733963
 ---
+
+
+------------ 
+
+```bush
+Go to cloud watch> log management >log group > search “ecs/dbt” > click pay-publish group > check latest logs > find which model failed or all haven’t started
+```
 
 Amazon Elastic Container Service >> 
 Clusters >>
@@ -15,9 +22,5 @@ Logs >>
 
 
 
------------- 
 
-```bush
-Go to cloud watch> log group > search “ecs/dbt” > click pay-publish group > check latest logs > find which model failed or all haven’t started
-```
 
