@@ -2,9 +2,13 @@
 id: 0kg8ym6uyimgpckw6vhbemd
 title: cbs_daily_gl_bal_trn
 desc: ''
-updated: 1761119549439
+updated: 1773136164516
 created: 1761118977239
 ---
+
+## this started from 
+- staging.ho_op (starter table)
+- backups.staging_opening (keep check points)
 
 
 ### this model is taking from carrying opening balance and day-1 transaction
