@@ -2,7 +2,7 @@
 id: m35r9rkp7m9g9dc0gxfz0li
 title: cbm_net
 desc: ''
-updated: 1778037362932
+updated: 1778038858067
 created: 1775106180056
 ---
 
@@ -206,6 +206,189 @@ select * from BBT_trans_reverse
 - ACH is main in cbmnet transaction
 - CCT012 and CCT013
 
+```sql
+--------------ACH (CCT012, CCT013)
+    
+with other_CCT_trn as (
+select 
+    trn_date,
+    last_day(trn_date) as month_end_date,
+    other_bank_name,
+    acc_no,
+    isnull(cust_no,'') as cust_no,
+    trn_group,
+    trn_category,
+    trn_type,
+    cbm_product,
+    upper(trn_status) as trn_status,
+    sum(case when trn_category = 'CBMNET_OUT' then trn_amount*-1 else trn_amount end) as trn_amount,
+    sum(case when trn_category = 'CBMNET_OUT' then trn_chg*-1 else trn_chg end) as trn_chg
+from 
+    kbz_analytics.derive.cbs_cbmnet_clearing_daily_acc_trn 
+where 
+    trn_date between '2025-04-01' and '2026-03-31'
+    and trn_group in ('CCT') 
+    and cbm_product not in ('CCT010', 'CCT011') 
+    and upper(trn_status) in ('COMPLETE', 'SUCCESS', 'NORESPONSE', 'INCOMPLETE') --need to check 
+group by 
+    trn_date,
+    last_day(trn_date),
+    other_bank_name,
+    acc_no,
+    isnull(cust_no,''),
+    trn_group,
+    trn_category,
+    trn_type,
+    cbm_product,
+    trn_status
+)
+    
+select * into #other_CCT_trn from other_CCT_trn
+
+--select 
+--    trn_status, 
+--    sum(trn_amount) as trn_amount, 
+--    sum(trn_chg) as trn_chg,
+--    sum(trn_amount + trn_chg) as total_amount 
+--from #other_CCT_trn
+--group by trn_status
+
+
+select 
+    trn_date, 
+    other_bank_name, 
+    case when cust_no = '' then acc_no else cust_no end as CIF_No,
+    trn_category, 
+    sum(trn_amount) as trn_amount, 
+    sum(trn_chg) as trn_chg,
+    sum(trn_amount + trn_chg) as total_amount
+from #other_CCT_trn 
+--where cust_no= ''
+group by trn_date, 
+    other_bank_name, 
+    cust_no,
+    acc_no,
+    trn_category
+order by 
+    trn_date,
+    other_bank_name
+```
+
+# CCT010
+```sql
+----------- myat CCT010
+
+----------for CCT010
+with CCT010_trans as (
+select 
+    trn_date as trn_date,
+    other_bank_name,
+    acc_no,
+    isnull(cust_no,'') as cust_no,
+    --trn_group,
+    trn_category,
+    trn_type,
+    --cbm_product,
+    upper(trn_status) as trn_status,
+    sum(case when trn_category = 'CBMNET_OUT' then trn_amount*-1 else trn_amount end) as trn_amount,
+    sum(case when trn_category = 'CBMNET_OUT' then trn_chg*-1 else trn_chg end) as trn_chg
+from 
+    kbz_analytics.derive.cbs_cbmnet_clearing_daily_acc_trn 
+where 
+    trn_date between '2025-10-01' and '2026-04-28' 
+    and trn_group in ('CCT') 
+    and cbm_product in ('CCT010') 
+    --and upper(trn_status) in ('COMPLETE', 'INCOMPLETE')
+group by 
+    trn_date,
+    other_bank_name,
+    acc_no,
+    isnull(cust_no,''),
+    --trn_group,
+    trn_category,
+    trn_type,
+    ---cbm_product,
+    trn_status
+)
+,
+CCT010_trans_reverse as (
+select 
+    trn_date as trn_date, 
+    r.other_bank_name,
+    r.acc_no,
+    isnull(a.cust_no,'') as cust_no,
+    --'CCT' as trn_group,
+    revr_category as trn_category,
+    'Others Reversal' as trn_type,
+    --'CCT010' as cbm_product,
+    upper(trn_status) as trn_status,
+    sum(trn_amount) as trn_amount,
+    0 as trn_chg
+from  
+    kbz_analytics.derive.cbs_cbmnet_daily_acc_all_revr_trn r
+left join kbz_analytics.cbs.sttm_cust_account a 
+on r.acc_no = a.cust_ac_no
+where 
+    trn_date between '2025-10-01' and '2026-04-28' 
+    and revr_category like 'CCT%'
+group by 
+    trn_date, 
+    r.other_bank_name,
+    r.acc_no,
+    isnull(a.cust_no,''),
+    revr_category,
+    trn_status
+)
+,
+CCT010_aungparlay as (
+select 
+    trn_dt as trn_date,
+    'AUNG BAR LAY(ONLINE LOTTERY PAYMENT)' as other_bank_name,
+    ac_no as acc_no,
+    isnull(related_customer,'') as cust_no,
+    --'CCT' as trn_group,
+    'CBMNET_OUT' as trn_category,
+    'ONLINE' as trn_type,
+    --'CCT010' as cbm_product,
+    'COMPLETE' as trn_status,
+    sum(lcy_amount*-1) as trn_amount,
+    0 as trn_chg
+from
+    kbz_analytics.cbs.actb_history 
+where 
+    ac_no = '00412600404379501' 
+    and trn_dt between '2025-10-01' and '2026-04-28' 
+    and drcr_ind = 'D' 
+    and trn_code in ('CFM', 'BFM') 
+group by 
+    trn_dt, 
+    ac_no,
+    isnull(related_customer,'') 
+)
+,
+CCT010_all as (
+select 
+    *
+from 
+    CCT010_trans
+union all
+select 
+    *
+from 
+    CCT010_trans_reverse
+union all
+select 
+    *
+from 
+    CCT010_aungparlay
+)
+
+select * into #CCT010_all from CCT010_all
+
+
+select * from #CCT010_all
+
+```
 
 
 
